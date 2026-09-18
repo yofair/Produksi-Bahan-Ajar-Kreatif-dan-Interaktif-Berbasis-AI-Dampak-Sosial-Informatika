@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Bahan Ajar Interaktif Dampak Sosial Informatika - Kelas X SMK">
+<title>Dampak Sosial Informatika | Kelas X SMK</title>
+<style>
+:root{
+  --primary:#1261d6;
+  --primary-dark:#0b3d91;
+  --secondary:#eaf3ff;
+  --accent:#18a66a;
+  --danger:#e55353;
+  --warning:#f0a51a;
+  --text:#172033;
+  --muted:#667085;
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --border:#dfe7f2;
+  --shadow:0 12px 35px rgba(21,54,93,.10);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  color:var(--text);
+  background:linear-gradient(135deg,#eef6ff 0%,#f8fbff 45%,#eef7f4 100%);
+  min-height:100vh;
+}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.app{min-height:100vh;display:flex;flex-direction:column}
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.topbar-inner{
+  max-width:1180px;margin:auto;padding:12px 20px;
+  display:flex;align-items:center;gap:16px;
+}
+.brand{font-weight:800;color:var(--primary-dark);white-space:nowrap}
+.progress-wrap{flex:1}
+.progress-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:5px}
+.progress{height:8px;background:#e7edf6;border-radius:99px;overflow:hidden}
+.progress-bar{height:100%;width:10%;background:linear-gradient(90deg,var(--primary),#55a1ff);transition:.3s}
+.container{width:min(1120px,calc(100% - 32px));margin:28px auto 90px}
+.slide{display:none;animation:fade .25s ease}
+.slide.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero,.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:24px;box-shadow:var(--shadow)
+}
+.hero{overflow:hidden;position:relative}
+.hero-main{
+  padding:55px 55px 45px;
+  background:radial-gradient(circle at 85% 15%,#dcecff 0 15%,transparent 16%),
+             linear-gradient(135deg,#fff 0%,#eef6ff 100%);
+}
+.badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:8px 13px;border-radius:99px;background:#dcecff;color:var(--primary-dark);
+  font-size:13px;font-weight:700
+}
+h1{font-size:clamp(32px,6vw,58px);line-height:1.04;margin:18px 0 14px;color:var(--primary-dark)}
+h2{font-size:clamp(25px,4vw,38px);margin:0 0 12px;color:var(--primary-dark)}
+h3{margin:0 0 8px}
+.lead{font-size:18px;line-height:1.7;color:#46546a;max-width:760px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{padding:24px}
+.card h3{color:var(--primary-dark)}
+.icon{font-size:30px;margin-bottom:8px}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+ul{line-height:1.8}
+.callout{
+  padding:18px;border-radius:16px;background:var(--secondary);
+  border-left:5px solid var(--primary);line-height:1.65
+}
+.positive{border-left-color:var(--accent);background:#eafaf3}
+.negative{border-left-color:var(--danger);background:#fff0f0}
+.warning{border-left-color:var(--warning);background:#fff8e8}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label{font-weight:700;font-size:14px}
+input,textarea{
+  width:100%;margin-top:8px;padding:13px 14px;border:1px solid #cfd9e7;
+  border-radius:12px;outline:none;background:white;color:var(--text)
+}
+input:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(18,97,214,.10)}
+textarea{min-height:140px;resize:vertical}
+.btn{
+  border:0;border-radius:12px;padding:12px 18px;font-weight:750;
+  transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-secondary{background:#edf3fb;color:#204269}
+.btn-success{background:var(--accent);color:#fff}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-outline{background:white;border:1px solid #cfd9e7;color:#204269}
+.actions{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  margin-top:22px;flex-wrap:wrap
+}
+.actions-right{display:flex;gap:10px;flex-wrap:wrap}
+.navbar-bottom{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  background:rgba(255,255,255,.96);border-top:1px solid var(--border);
+  box-shadow:0 -8px 30px rgba(20,50,90,.08)
+}
+.nav-inner{width:min(1120px,calc(100% - 32px));margin:auto;padding:12px 0;display:flex;justify-content:space-between;gap:10px}
+.pill-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.pill{padding:10px 13px;background:#f3f6fa;border:1px solid var(--border);border-radius:12px;font-size:14px}
+.case-box{
+  padding:24px;border-radius:18px;background:linear-gradient(135deg,#eff6ff,#fff);
+  border:1px solid #cfe0f7;margin:18px 0
+}
+.option{
+  display:block;width:100%;text-align:left;border:1px solid #d5dfec;background:#fff;
+  padding:15px;border-radius:14px;margin:10px 0;transition:.2s
+}
+.option:hover{border-color:#8bb6ef;background:#f8fbff}
+.option.selected{border-color:var(--primary);background:#edf5ff}
+.option.correct{border-color:var(--accent);background:#eafaf3}
+.option.wrong{border-color:var(--danger);background:#fff0f0}
+.feedback{margin-top:12px;padding:13px 15px;border-radius:12px;display:none;line-height:1.55}
+.feedback.show{display:block}
+.feedback.good{background:#eafaf3;color:#146b48}
+.feedback.bad{background:#fff0f0;color:#9d2e2e}
+.feedback.neutral{background:#fff8e8;color:#7a5310}
+.quiz-card{margin-bottom:18px}
+.qnum{font-size:12px;color:var(--primary);font-weight:800;text-transform:uppercase}
+.result-score{
+  width:180px;height:180px;border-radius:50%;margin:12px auto 20px;
+  display:grid;place-items:center;background:conic-gradient(var(--primary) var(--score-degree),#e8eef6 0);
+  position:relative
+}
+.result-score::before{content:"";position:absolute;width:142px;height:142px;background:white;border-radius:50%}
+.score-number{position:relative;font-size:42px;font-weight:850;color:var(--primary-dark)}
+.center{text-align:center}
+.table-wrap{overflow:auto}
+table{border-collapse:collapse;width:100%;background:white;border-radius:14px;overflow:hidden}
+th,td{padding:11px 12px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+th{background:#eff5fc;color:#25466b}
+.reflection-list{display:grid;gap:14px}
+.hidden{display:none!important}
+.media{
+  border-radius:20px;overflow:hidden;background:#0c2e59;color:white;
+  min-height:330px;position:relative
+}
+.media-screen{
+  min-height:280px;display:grid;place-items:center;text-align:center;padding:35px;
+  background:
+    radial-gradient(circle at 25% 25%,rgba(70,161,255,.5),transparent 25%),
+    radial-gradient(circle at 75% 65%,rgba(24,166,106,.35),transparent 25%),
+    linear-gradient(135deg,#071a35,#0f4c8a)
+}
+.play{
+  width:82px;height:82px;border-radius:50%;border:0;background:white;color:var(--primary);
+  font-size:32px;box-shadow:0 8px 25px rgba(0,0,0,.2)
+}
+.media-caption{padding:14px 18px;background:#09254a}
+.stat{
+  text-align:center;padding:22px;border-radius:18px;background:#f7faff;border:1px solid var(--border)
+}
+.stat strong{display:block;font-size:30px;color:var(--primary-dark)}
+footer{text-align:center;color:var(--muted);padding:12px 0 80px;font-size:12px}
+@media(max-width:800px){
+  .grid,.grid-3,.form-grid{grid-template-columns:1fr}
+  .hero-main{padding:35px 24px}
+  .container{width:min(100% - 20px,1120px);margin-top:18px}
+  .topbar-inner{padding:10px}
+  .brand{font-size:13px}
+  .nav-inner{width:calc(100% - 20px)}
+  .btn{padding:11px 14px}
+}
+@media print{
+  .topbar,.navbar-bottom,.actions,footer{display:none!important}
+  body{background:white}
+  .container{width:100%;margin:0}
+  .slide{display:none!important}
+  #slide10{display:block!important}
+  .card,.hero{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">💻 Informatika • Kelas X SMK</div>
+    <div class="progress-wrap">
+      <div class="progress-meta"><span id="progressText">Slide 1 dari 10</span><span id="studentMini">Belum diisi</span></div>
+      <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- SLIDE 1 -->
+<section class="slide active" id="slide1">
+  <div class="hero">
+    <div class="hero-main">
+      <span class="badge">📘 Bahan Ajar Interaktif</span>
+      <h1>Dampak Sosial<br>Informatika</h1>
+      <p class="lead">Pembelajaran interaktif untuk memahami dampak teknologi informatika dalam kehidupan sehari-hari dan membangun sikap bijak sebagai pengguna teknologi digital.</p>
+      <div class="card" style="margin-top:28px;max-width:620px">
+        <h3>Identitas Peserta Didik</h3>
+        <div class="form-grid">
+          <div>
+            <label for="studentName">Nama siswa *</label>
+            <input id="studentName" type="text" placeholder="Masukkan nama lengkap">
+          </div>
+          <div>
+            <label for="studentClass">Kelas</label>
+            <input id="studentClass" type="text" value="X SMK" placeholder="Contoh: X TJKT 1">
+          </div>
+        </div>
+        <div class="actions">
+          <span class="small muted">Nama diperlukan agar hasil respons dapat dicatat.</span>
+          <button class="btn btn-primary" onclick="startLearning()">Mulai Belajar →</button>
+        </div>
+        <div id="nameError" class="feedback bad"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2 -->
+<section class="slide" id="slide2">
+  <div class="card">
+    <span class="badge">🎯 Slide 2 • Tujuan & Petunjuk</span>
+    <h2 style="margin-top:18px">Tujuan Pembelajaran</h2>
+    <div class="callout">
+      Setelah mempelajari bahan ajar interaktif, peserta didik mampu <strong>menjelaskan dampak positif dan negatif informatika dalam kehidupan sehari-hari serta menunjukkan sikap bijak dalam memanfaatkan teknologi digital.</strong>
+    </div>
+    <div class="grid" style="margin-top:18px">
+      <div>
+        <h3>📌 Petunjuk</h3>
+        <ul>
+          <li>Baca materi pada setiap slide.</li>
+          <li>Amati media pendukung.</li>
+          <li>Pilih tindakan yang menurutmu paling tepat pada studi kasus.</li>
+          <li>Kerjakan 5 soal kuis.</li>
+          <li>Isi refleksi dan periksa hasil responsmu.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>🧭 Alur Belajar</h3>
+        <div class="pill-list">
+          <span class="pill">Materi</span><span class="pill">Media</span><span class="pill">Studi Kasus</span>
+          <span class="pill">Kuis</span><span class="pill">Feedback</span><span class="pill">Refleksi</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3 -->
+<section class="slide" id="slide3">
+  <div class="card">
+    <span class="badge">📖 Slide 3 • Materi</span>
+    <h2 style="margin-top:18px">Apa Itu Dampak Sosial Informatika?</h2>
+    <p class="lead">Dampak sosial informatika adalah perubahan yang muncul dalam kehidupan individu dan masyarakat akibat penggunaan teknologi informasi dan komunikasi.</p>
+    <div class="grid">
+      <div class="card positive">
+        <div class="icon">🌐</div>
+        <h3>Informatika dalam kehidupan</h3>
+        <p>Teknologi digunakan untuk belajar, berkomunikasi, bekerja, bertransaksi, mencari informasi, dan menghasilkan karya.</p>
+      </div>
+      <div class="card warning">
+        <div class="icon">⚖️</div>
+        <h3>Dampaknya bergantung pada penggunaan</h3>
+        <p>Teknologi dapat memberikan manfaat besar, tetapi pengguna perlu mempertimbangkan keamanan, etika, privasi, dan kebenaran informasi.</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:18px"><strong>Inti materi:</strong> menjadi pengguna teknologi yang cerdas berarti memahami manfaat sekaligus risiko dari teknologi yang digunakan.</div>
+  </div>
+</section>
+
+<!-- SLIDE 4 -->
+<section class="slide" id="slide4">
+  <div class="card">
+    <span class="badge">⚖️ Slide 4 • Dampak Positif & Negatif</span>
+    <h2 style="margin-top:18px">Dua Sisi Penggunaan Informatika</h2>
+    <div class="grid">
+      <div class="card positive">
+        <h3>✅ Dampak Positif</h3>
+        <ul>
+          <li>Mempermudah komunikasi dan kolaborasi.</li>
+          <li>Memperluas akses terhadap informasi.</li>
+          <li>Mendukung pembelajaran jarak jauh dan mandiri.</li>
+          <li>Membuka peluang kreativitas dan inovasi.</li>
+          <li>Meningkatkan efisiensi pekerjaan.</li>
+        </ul>
+      </div>
+      <div class="card negative">
+        <h3>⚠️ Dampak Negatif</h3>
+        <ul>
+          <li>Penyebaran hoaks dan informasi menyesatkan.</li>
+          <li>Pelanggaran privasi dan keamanan data.</li>
+          <li>Cyberbullying dan konflik di ruang digital.</li>
+          <li>Penggunaan perangkat secara berlebihan.</li>
+          <li>Kesenjangan akses teknologi.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout warning" style="margin-top:18px"><strong>Prinsip bijak:</strong> pikirkan dampak sebelum membagikan informasi, gunakan sumber terpercaya, dan hormati orang lain di ruang digital.</div>
+  </div>
+</section>
+
+<!-- SLIDE 5 -->
+<section class="slide" id="slide5">
+  <div class="card">
+    <span class="badge">🎬 Slide 5 • Media Pendukung</span>
+    <h2 style="margin-top:18px">Media Pendukung: Infografis Interaktif</h2>
+    <p class="muted">Klik tombol di bawah untuk melihat contoh dampak teknologi. Media ini menjadi pendukung visual sebelum masuk ke studi kasus.</p>
+    <div class="media">
+      <div class="media-screen" id="mediaScreen">
+        <div>
+          <div style="font-size:54px">📱 ↔ 🌐</div>
+          <h2 style="color:white">Teknologi & Kehidupan</h2>
+          <p style="color:#dcecff">Pilih “Positif” atau “Perlu Diwaspadai” untuk melihat contohnya.</p>
+          <button class="play" onclick="showMedia('positive')">▶</button>
+        </div>
+      </div>
+      <div class="media-caption" id="mediaCaption">Media pendukung interaktif — klik tombol untuk memulai.</div>
+    </div>
+    <div class="actions">
+      <div class="actions-right">
+        <button class="btn btn-success" onclick="showMedia('positive')">✅ Dampak Positif</button>
+        <button class="btn btn-danger" onclick="showMedia('negative')">⚠️ Perlu Diwaspadai</button>
+      </div>
+    </div>
+    <div id="mediaInfo" class="callout hidden" style="margin-top:16px"></div>
+  </div>
+</section>
+
+<!-- SLIDE 6 -->
+<section class="slide" id="slide6">
+  <div class="card">
+    <span class="badge">🧩 Slide 6 • Studi Kasus Interaktif</span>
+    <h2 style="margin-top:18px">Kasus: Pesan Berantai di Grup Kelas</h2>
+    <div class="case-box">
+      <p><strong>Situasi:</strong> Rani menerima pesan di grup kelas yang menyatakan bahwa sekolah akan memberikan hadiah kepada siswa yang mengisi sebuah tautan. Pesan tersebut meminta data pribadi dan sudah dibagikan oleh banyak orang.</p>
+      <p class="muted"><strong>Pertanyaan:</strong> Apa tindakan yang paling bijak dilakukan Rani?</p>
+    </div>
+    <div id="caseOptions">
+      <button class="option" onclick="chooseCase(0)">A. Langsung membagikan pesan tersebut ke grup lain.</button>
+      <button class="option" onclick="chooseCase(1)">B. Mengecek kebenaran informasi melalui sumber resmi sekolah dan tidak memberikan data sebelum terverifikasi.</button>
+      <button class="option" onclick="chooseCase(2)">C. Mengabaikan pesan tanpa memberi tahu siapa pun.</button>
+      <button class="option" onclick="chooseCase(3)">D. Mempercayainya karena sudah banyak orang yang membagikannya.</button>
+    </div>
+    <div id="caseFeedback" class="feedback"></div>
+  </div>
+</section>
+
+<!-- SLIDE 7 -->
+<section class="slide" id="slide7">
+  <div class="card">
+    <span class="badge">📝 Slide 7 • Kuis</span>
+    <h2 style="margin-top:18px">Kuis Evaluasi — 5 Soal</h2>
+    <p class="muted">Pilih satu jawaban pada setiap soal. Skor dihitung otomatis setelah semua soal dijawab.</p>
+    <div id="quizContainer"></div>
+    <div class="actions">
+      <span id="quizStatus" class="small muted">0 dari 5 soal dijawab</span>
+      <button class="btn btn-primary" onclick="finishQuiz()">Periksa Jawaban →</button>
+    </div>
+    <div id="quizFeedback" class="feedback"></div>
+  </div>
+</section>
+
+<!-- SLIDE 8 -->
+<section class="slide" id="slide8">
+  <div class="card center">
+    <span class="badge">🏆 Slide 8 • Hasil Kuis</span>
+    <h2 style="margin-top:18px">Hasil Belajar</h2>
+    <div class="result-score" id="scoreCircle" style="--score-degree:0deg">
+      <div class="score-number" id="scoreNumber">0</div>
+    </div>
+    <h3 id="scoreLabel">Kuis belum diperiksa</h3>
+    <p id="scoreFeedback" class="lead" style="margin:0 auto;max-width:700px">Kerjakan kuis pada slide sebelumnya untuk melihat hasil.</p>
+    <div class="grid" style="margin-top:24px">
+      <div class="stat"><span>Jawaban benar</span><strong id="correctCount">0</strong></div>
+      <div class="stat"><span>Jawaban salah</span><strong id="wrongCount">0</strong></div>
+    </div>
+    <div class="callout" style="margin-top:20px;text-align:left">
+      <strong>Catatan:</strong> Nilai digunakan sebagai umpan balik belajar. Jika masih ada jawaban yang salah, pelajari kembali materi dan coba pahami alasan dari setiap jawaban.
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 9 -->
+<section class="slide" id="slide9">
+  <div class="card">
+    <span class="badge">💭 Slide 9 • Refleksi</span>
+    <h2 style="margin-top:18px">Refleksi Diri</h2>
+    <p class="lead">Tuliskan pemahaman dan rencana tindakanmu setelah mempelajari Dampak Sosial Informatika.</p>
+    <div class="reflection-list">
+      <div>
+        <label for="reflection1">1. Hal baru apa yang kamu pahami?</label>
+        <textarea id="reflection1" placeholder="Tuliskan pemahamanmu..."></textarea>
+      </div>
+      <div>
+        <label for="reflection2">2. Kebiasaan digital apa yang ingin kamu perbaiki?</label>
+        <textarea id="reflection2" placeholder="Tuliskan rencana atau kebiasaan yang ingin diperbaiki..."></textarea>
+      </div>
+      <div>
+        <label for="reflection3">3. Apa tindakan bijak yang akan kamu lakukan saat menerima informasi di internet?</label>
+        <textarea id="reflection3" placeholder="Tuliskan tindakanmu..."></textarea>
+      </div>
+    </div>
+    <div class="actions">
+      <span id="saveStatus" class="small muted">Refleksi belum disimpan.</span>
+      <button class="btn btn-success" onclick="saveReflection()">✓ Simpan Refleksi</button>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10 -->
+<section class="slide" id="slide10">
+  <div class="card">
+    <span class="badge">📊 Slide 10 • Hasil Respons Siswa</span>
+    <h2 style="margin-top:18px">Ringkasan Hasil Respons</h2>
+    <p class="muted">Halaman ini merangkum data yang diisi selama pembelajaran pada perangkat ini.</p>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><th style="width:230px">Nama siswa</th><td id="resultName">-</td></tr>
+          <tr><th>Kelas</th><td id="resultClass">-</td></tr>
+          <tr><th>Studi kasus</th><td id="resultCase">Belum dijawab</td></tr>
+          <tr><th>Skor kuis</th><td id="resultScore">Belum diperiksa</td></tr>
+          <tr><th>Jawaban benar</th><td id="resultCorrect">-</td></tr>
+          <tr><th>Jawaban salah</th><td id="resultWrong">-</td></tr>
+          <tr><th>Waktu pengerjaan</th><td id="resultTime">-</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card" style="margin-top:18px;background:#f8fbff">
+      <h3>💭 Jawaban Refleksi</h3>
+      <p><strong>Pemahaman:</strong></p>
+      <p id="resultReflection1" class="muted">Belum diisi.</p>
+      <p><strong>Kebiasaan digital:</strong></p>
+      <p id="resultReflection2" class="muted">Belum diisi.</p>
+      <p><strong>Tindakan bijak:</strong></p>
+      <p id="resultReflection3" class="muted">Belum diisi.</p>
+    </div>
+    <div class="actions">
+      <div class="actions-right">
+        <button class="btn btn-outline" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+        <button class="btn btn-primary" onclick="downloadJSON()">⬇️ Simpan Respons (.json)</button>
+      </div>
+      <button class="btn btn-secondary" onclick="resetAll()">↻ Mulai Ulang</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="navbar-bottom">
+  <div class="nav-inner">
+    <button class="btn btn-secondary" id="backBtn" onclick="prevSlide()">← Back</button>
+    <button class="btn btn-secondary" onclick="goHome()">⌂ Home</button>
+    <button class="btn btn-primary" id="nextBtn" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<footer>
+  Bahan Ajar Interaktif • Dampak Sosial Informatika • Kelas X SMK<br>
+  <strong>© 2026 Yoga Fauzi Irawan, S. Kom., Gr.</strong> • Hak Cipta Dilindungi
+</footer>
+
+</div>
+
+<script>
+const state = {
+  current: 1,
+  total: 10,
+  name: "",
+  className: "X SMK",
+  startTime: null,
+  caseChoice: null,
+  quizAnswers: Array(5).fill(null),
+  score: null,
+  reflection: ["","",""],
+  mediaUsed: false
+};
+
+const questions = [
+  {
+    q:"Manakah yang merupakan contoh dampak positif informatika dalam bidang pendidikan?",
+    options:[
+      "Memperluas akses terhadap sumber belajar",
+      "Menyebarkan informasi yang belum diperiksa",
+      "Mengambil data pribadi orang lain",
+      "Mengganggu pembelajaran dengan spam"
+    ],
+    answer:0,
+    explain:"Teknologi dapat memperluas akses siswa terhadap sumber belajar dan mendukung proses pembelajaran."
+  },
+  {
+    q:"Sebelum membagikan berita yang diterima melalui media sosial, tindakan yang tepat adalah...",
+    options:[
+      "Membagikannya agar cepat viral",
+      "Memeriksa sumber dan kebenaran informasinya",
+      "Mempercayainya karena banyak yang membagikan",
+      "Mengubah judul agar lebih menarik"
+    ],
+    answer:1,
+    explain:"Informasi perlu diverifikasi melalui sumber yang dapat dipercaya sebelum dibagikan."
+  },
+  {
+    q:"Manakah yang termasuk risiko penggunaan informatika?",
+    options:[
+      "Kolaborasi menjadi lebih mudah",
+      "Akses informasi semakin luas",
+      "Pelanggaran privasi dan keamanan data",
+      "Pembelajaran menjadi lebih fleksibel"
+    ],
+    answer:2,
+    explain:"Pelanggaran privasi dan keamanan data merupakan salah satu risiko penggunaan teknologi."
+  },
+  {
+    q:"Sikap yang tepat ketika berdiskusi di media sosial adalah...",
+    options:[
+      "Menghina orang yang berbeda pendapat",
+      "Menyebarkan data pribadi lawan bicara",
+      "Menggunakan bahasa yang sopan dan menghargai orang lain",
+      "Membuat informasi palsu untuk mendapatkan perhatian"
+    ],
+    answer:2,
+    explain:"Etika digital mencakup komunikasi yang sopan, menghargai orang lain, dan bertanggung jawab."
+  },
+  {
+    q:"Jika menerima tautan yang meminta data pribadi dengan alasan hadiah, sebaiknya...",
+    options:[
+      "Langsung mengisi semua data",
+      "Mengecek sumber dan keaslian informasi terlebih dahulu",
+      "Meneruskannya ke semua kontak",
+      "Memasukkan data teman sebagai percobaan"
+    ],
+    answer:1,
+    explain:"Tautan yang meminta data pribadi perlu diperiksa terlebih dahulu. Jangan memberikan data sebelum sumbernya jelas dan terpercaya."
+  }
+];
+
+function $(id){return document.getElementById(id)}
+
+function showSlide(n){
+  if(n<1 || n>state.total) return;
+  document.querySelectorAll(".slide").forEach(s=>s.classList.remove("active"));
+  $("slide"+n).classList.add("active");
+  state.current=n;
+  $("progressText").textContent=`Slide ${n} dari ${state.total}`;
+  $("progressBar").style.width=`${n/state.total*100}%`;
+  $("backBtn").disabled=n===1;
+  $("backBtn").style.opacity=n===1?".55":"1";
+  $("nextBtn").textContent=n===state.total?"Selesai ✓":"Next →";
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(n===7) updateQuizStatus();
+  if(n===8) updateResult();
+  if(n===10) updateResult();
+}
+function nextSlide(){
+  // Slide 1: nama siswa wajib diisi
+  if(state.current===1 && !state.name){
+    showError("Silakan isi nama siswa terlebih dahulu sebelum melanjutkan.");
+    $("studentName").focus();
+    return;
+  }
+
+  // Slide 5: media pendukung wajib dipilih/dibuka
+  if(state.current===5 && !state.mediaUsed){
+    const info=$("mediaInfo");
+    info.className="feedback neutral show";
+    info.textContent="Silakan pilih salah satu media pendukung (Dampak Positif atau Perlu Diwaspadai) sebelum melanjutkan.";
+    return;
+  }
+
+  // Slide 6: studi kasus wajib dijawab
+  if(state.current===6 && state.caseChoice===null){
+    const fb=$("caseFeedback");
+    fb.className="feedback neutral show";
+    fb.textContent="Silakan pilih salah satu jawaban studi kasus sebelum melanjutkan.";
+    return;
+  }
+
+  // Slide 7: semua soal wajib dijawab dan kuis wajib diperiksa
+  if(state.current===7){
+    if(state.quizAnswers.some(x=>x===null)){
+      finishQuiz();
+      return;
+    }
+    if(state.score===null){
+      finishQuiz();
+      if(state.score===null) return;
+    }
+  }
+
+  // Slide 9: seluruh refleksi wajib diisi dan disimpan
+  if(state.current===9){
+    const reflections=[
+      $("reflection1").value.trim(),
+      $("reflection2").value.trim(),
+      $("reflection3").value.trim()
+    ];
+    const emptyIndex=reflections.findIndex(x=>!x);
+    if(emptyIndex!==-1){
+      $("saveStatus").textContent=`Refleksi nomor ${emptyIndex+1} belum diisi. Lengkapi semua refleksi sebelum melanjutkan.`;
+      document.getElementById(["reflection1","reflection2","reflection3"][emptyIndex]).focus();
+      return;
+    }
+    state.reflection=reflections;
+    localStorage.setItem("dsi_reflection",JSON.stringify(state.reflection));
+    $("saveStatus").textContent="✓ Semua refleksi sudah tersimpan.";
+  }
+
+  if(state.current<state.total) showSlide(state.current+1);
+}
+function prevSlide(){if(state.current>1)showSlide(state.current-1)}
+function goHome(){showSlide(1)}
+function showError(msg){
+  const el=$("nameError"); el.textContent=msg; el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"),3000);
+}
+function startLearning(){
+  const name=$("studentName").value.trim();
+  if(!name){showError("Nama siswa wajib diisi."); $("studentName").focus(); return;}
+  state.name=name;
+  state.className=$("studentClass").value.trim() || "X SMK";
+  state.startTime=state.startTime || new Date();
+  $("studentMini").textContent=state.name;
+  localStorage.setItem("dsi_name",state.name);
+  localStorage.setItem("dsi_class",state.className);
+  showSlide(2);
+  updateResult();
+}
+
+function showMedia(type){
+  state.mediaUsed=true;
+  const screen=$("mediaScreen");
+  const info=$("mediaInfo");
+  if(type==="positive"){
+    screen.style.background="radial-gradient(circle at 25% 25%,rgba(44,210,133,.55),transparent 25%),linear-gradient(135deg,#063b2c,#13875b)";
+    screen.innerHTML=`<div><div style="font-size:54px">🌱 📚 💬</div><h2 style="color:white">Dampak Positif</h2><p style="color:#e7fff4">Teknologi membantu komunikasi, pembelajaran, kolaborasi, kreativitas, dan akses informasi.</p></div>`;
+    $("mediaCaption").textContent="Contoh: belajar menggunakan sumber digital, berkolaborasi secara daring, dan membuat karya kreatif.";
+    info.className="callout positive";
+    info.innerHTML="<strong>Yang perlu diingat:</strong> manfaat teknologi semakin terasa ketika digunakan untuk tujuan yang produktif dan bertanggung jawab.";
+  }else{
+    screen.style.background="radial-gradient(circle at 75% 25%,rgba(255,92,92,.55),transparent 25%),linear-gradient(135deg,#4c1010,#a83232)";
+    screen.innerHTML=`<div><div style="font-size:54px">⚠️ 🔒 📰</div><h2 style="color:white">Perlu Diwaspadai</h2><p style="color:#fff0f0">Hoaks, penipuan, kebocoran data, cyberbullying, dan penggunaan berlebihan dapat merugikan pengguna.</p></div>`;
+    $("mediaCaption").textContent="Contoh: menerima tautan mencurigakan, membagikan informasi tanpa verifikasi, atau menyebarkan data pribadi.";
+    info.className="callout negative";
+    info.innerHTML="<strong>Yang perlu diingat:</strong> berhenti sejenak, periksa sumber, lindungi data pribadi, dan pikirkan dampak sebelum bertindak.";
+  }
+  info.classList.remove("hidden");
+}
+
+function chooseCase(index){
+  state.caseChoice=index;
+  const options=document.querySelectorAll("#caseOptions .option");
+  options.forEach((o,i)=>{o.classList.remove("selected","correct","wrong"); if(i===index)o.classList.add("selected")});
+  const fb=$("caseFeedback");
+  if(index===1){
+    options[index].classList.add("correct");
+    fb.className="feedback good show";
+    fb.innerHTML="<strong>Tepat.</strong> Memeriksa sumber resmi dan melindungi data pribadi merupakan tindakan yang lebih bertanggung jawab.";
+  }else{
+    options[index].classList.add("wrong");
+    options[1].classList.add("correct");
+    fb.className="feedback bad show";
+    fb.innerHTML="<strong>Belum tepat.</strong> Sebelum mengikuti atau membagikan pesan, informasi perlu diverifikasi dan data pribadi perlu dilindungi.";
+  }
+  updateResult();
+}
+
+function renderQuiz(){
+  const container=$("quizContainer");
+  container.innerHTML=questions.map((item,qi)=>`
+    <div class="card quiz-card">
+      <div class="qnum">Soal ${qi+1} dari 5</div>
+      <h3>${item.q}</h3>
+      <div>
+        ${item.options.map((opt,oi)=>`
+          <button class="option quiz-option" data-q="${qi}" data-o="${oi}" onclick="answerQuiz(${qi},${oi})">
+            <strong>${String.fromCharCode(65+oi)}.</strong> ${opt}
+          </button>
+        `).join("")}
+      </div>
+      <div id="qfeedback${qi}" class="feedback"></div>
+    </div>
+  `).join("");
+}
+function answerQuiz(qi,oi){
+  if(state.score!==null)return;
+  state.quizAnswers[qi]=oi;
+  document.querySelectorAll(`.quiz-option[data-q="${qi}"]`).forEach(btn=>{
+    btn.classList.toggle("selected",Number(btn.dataset.o)===oi);
+  });
+  updateQuizStatus();
+}
+function updateQuizStatus(){
+  const count=state.quizAnswers.filter(x=>x!==null).length;
+  $("quizStatus").textContent=`${count} dari 5 soal dijawab`;
+}
+function finishQuiz(){
+  if(state.quizAnswers.some(x=>x===null)){
+    $("quizFeedback").className="feedback neutral show";
+    $("quizFeedback").textContent="Lengkapi semua 5 soal terlebih dahulu.";
+    const first=state.quizAnswers.findIndex(x=>x===null);
+    if(first>=0){
+      document.querySelectorAll(".quiz-card")[first]?.scrollIntoView({behavior:"smooth",block:"center"});
+    }
+    return;
+  }
+  let correct=0;
+  questions.forEach((q,i)=>{
+    const selected=state.quizAnswers[i];
+    if(selected===q.answer) correct++;
+    document.querySelectorAll(`.quiz-option[data-q="${i}"]`).forEach(btn=>{
+      const oi=Number(btn.dataset.o);
+      btn.classList.remove("selected");
+      if(oi===q.answer)btn.classList.add("correct");
+      if(oi===selected && selected!==q.answer)btn.classList.add("wrong");
+    });
+    const fb=$(`qfeedback${i}`);
+    fb.className=`feedback ${selected===q.answer?"good":"bad"} show`;
+    fb.innerHTML=selected===q.answer
+      ? `<strong>Benar.</strong> ${q.explain}`
+      : `<strong>Jawaban yang tepat: ${String.fromCharCode(65+q.answer)}.</strong> ${q.explain}`;
+  });
+  state.score=correct*20;
+  $("quizFeedback").className="feedback good show";
+  $("quizFeedback").textContent="Kuis selesai. Lihat slide berikutnya untuk melihat skor dan feedback.";
+  updateResult();
+}
+function getScoreMessage(score){
+  if(score>=80)return "Pemahamanmu sudah baik. Pertahankan kebiasaan menggunakan teknologi secara kritis dan bertanggung jawab.";
+  if(score>=60)return "Pemahamanmu cukup baik. Tinjau kembali materi tentang verifikasi informasi, etika, dan keamanan data.";
+  return "Mari pelajari kembali materi. Fokus pada cara memeriksa informasi, menjaga privasi, dan menggunakan teknologi secara bijak.";
+}
+function updateResult(){
+  $("resultName").textContent=state.name||$("studentName").value.trim()||"-";
+  $("resultClass").textContent=state.className||$("studentClass").value.trim()||"X SMK";
+  $("resultCase").textContent=state.caseChoice===null?"Belum dijawab":
+    ["A. Langsung membagikan pesan.","B. Memeriksa sumber resmi dan melindungi data.","C. Mengabaikan pesan.","D. Mempercayai karena banyak dibagikan."][state.caseChoice];
+  if(state.score===null){
+    $("scoreNumber").textContent="0";
+    $("scoreLabel").textContent="Kuis belum diperiksa";
+    $("scoreFeedback").textContent="Kerjakan 5 soal untuk melihat hasil.";
+    $("correctCount").textContent="0"; $("wrongCount").textContent="0";
+    $("resultScore").textContent="Belum diperiksa";
+    $("resultCorrect").textContent="-"; $("resultWrong").textContent="-";
+    $("scoreCircle").style.setProperty("--score-degree","0deg");
+  }else{
+    const correct=state.score/20, wrong=5-correct;
+    $("scoreNumber").textContent=state.score;
+    $("scoreLabel").textContent=state.score>=80?"Sangat Baik":state.score>=60?"Cukup Baik":"Perlu Belajar Lagi";
+    $("scoreFeedback").textContent=getScoreMessage(state.score);
+    $("correctCount").textContent=correct;
+    $("wrongCount").textContent=wrong;
+    $("resultScore").textContent=state.score+" / 100";
+    $("resultCorrect").textContent=correct+" soal";
+    $("resultWrong").textContent=wrong+" soal";
+    $("scoreCircle").style.setProperty("--score-degree",(state.score*3.6)+"deg");
+  }
+  $("resultReflection1").textContent=state.reflection[0]||"Belum diisi.";
+  $("resultReflection2").textContent=state.reflection[1]||"Belum diisi.";
+  $("resultReflection3").textContent=state.reflection[2]||"Belum diisi.";
+  $("resultTime").textContent=state.startTime?formatDuration(Date.now()-state.startTime.getTime()):"-";
+}
+function saveReflection(){
+  const reflections=[
+    $("reflection1").value.trim(),
+    $("reflection2").value.trim(),
+    $("reflection3").value.trim()
+  ];
+  const emptyIndex=reflections.findIndex(x=>!x);
+  if(emptyIndex!==-1){
+    $("saveStatus").textContent=`Refleksi nomor ${emptyIndex+1} belum diisi. Lengkapi semua kolom terlebih dahulu.`;
+    document.getElementById(["reflection1","reflection2","reflection3"][emptyIndex]).focus();
+    return false;
+  }
+  state.reflection=reflections;
+  localStorage.setItem("dsi_reflection",JSON.stringify(state.reflection));
+  $("saveStatus").textContent="✓ Semua refleksi tersimpan pada perangkat ini.";
+  updateResult();
+  return true;
+}
+function formatDuration(ms){
+  const sec=Math.max(0,Math.floor(ms/1000));
+  const m=Math.floor(sec/60), s=sec%60;
+  return `${m} menit ${String(s).padStart(2,"0")} detik`;
+}
+function collectData(){
+  return {
+    topik:"Dampak Sosial Informatika",
+    mataPelajaran:"Informatika",
+    kelas:state.className,
+    nama:state.name,
+    tujuanPembelajaran:"Setelah mempelajari bahan ajar interaktif, peserta didik mampu menjelaskan dampak positif dan negatif informatika dalam kehidupan sehari-hari serta menunjukkan sikap bijak dalam memanfaatkan teknologi digital.",
+    studiKasus:state.caseChoice,
+    jawabanKuis:state.quizAnswers,
+    skor:state.score,
+    jawabanBenar:state.score===null?null:state.score/20,
+    jawabanSalah:state.score===null?null:5-(state.score/20),
+    refleksi:state.reflection,
+    mediaPendukungDigunakan:state.mediaUsed,
+    waktuPengerjaan:state.startTime?formatDuration(Date.now()-state.startTime.getTime()):null,
+    waktuEkspor:new Date().toLocaleString("id-ID")
+  };
+}
+function downloadJSON(){
+  updateResult();
+  const data=collectData();
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=`respons_${(state.name||"siswa").replace(/[^a-z0-9]+/gi,"_").toLowerCase()}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function resetAll(){
+  if(!confirm("Mulai ulang akan menghapus jawaban pada sesi ini. Lanjutkan?"))return;
+  localStorage.removeItem("dsi_name");
+  localStorage.removeItem("dsi_class");
+  localStorage.removeItem("dsi_reflection");
+  location.reload();
+}
+
+document.addEventListener("keydown",e=>{
+  if(["INPUT","TEXTAREA","BUTTON"].includes(document.activeElement.tagName))return;
+  if(e.key==="ArrowRight")nextSlide();
+  if(e.key==="ArrowLeft")prevSlide();
+});
+
+(function init(){
+  renderQuiz();
+  const savedName=localStorage.getItem("dsi_name");
+  const savedClass=localStorage.getItem("dsi_class");
+  const savedReflection=localStorage.getItem("dsi_reflection");
+  if(savedName){$("studentName").value=savedName;state.name=savedName;$("studentMini").textContent=savedName}
+  if(savedClass){$("studentClass").value=savedClass;state.className=savedClass}
+  if(savedReflection){
+    try{
+      state.reflection=JSON.parse(savedReflection);
+      $("reflection1").value=state.reflection[0]||"";
+      $("reflection2").value=state.reflection[1]||"";
+      $("reflection3").value=state.reflection[2]||"";
+    }catch(e){}
+  }
+  showSlide(1);
+})();
+</script>
+</body>
+</html>
